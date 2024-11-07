@@ -7,7 +7,7 @@ class TextFieldCommon extends StatelessWidget {
     this.suffixIcon,
     this.hintText,
     this.controller,
-    required this.textAlign,
+    this.textAlign,
     this.enabled,
     this.keyboardType,
     this.style,
@@ -17,25 +17,28 @@ class TextFieldCommon extends StatelessWidget {
     this.maxLines,
     this.cursorColor,
     this.minLines,
-    this.onChanged,
+    this.onChanged,this.onTap,
     this.labelText,
     this.hintStyle,
     this.filled,
-    this.labelStyle,
+    this.labelStyle,this.focusedBorder,this.obscureText = false,
   });
   final InputBorder? border;
+  final InputBorder? focusedBorder;
   final TextStyle? style;
   final Widget? suffixIcon;
   final String? hintText;
   final String? labelText;
   final TextEditingController? controller;
-  final TextAlign textAlign;
+  final TextAlign? textAlign;
   final bool? enabled;
   final TextInputType? keyboardType;
   final Widget? prefix;
   final Color? fillColor;
   final FocusNode? focusNode;
   final int? maxLines;
+  final bool obscureText;
+  final void Function()? onTap;
   final Color? cursorColor;
   final void Function(String)? onChanged;
   final int? minLines;
@@ -46,6 +49,8 @@ class TextFieldCommon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onTap: onTap,
+      obscureText: obscureText,
       onChanged: onChanged,
       onTapOutside: (event) {
         FocusManager.instance.primaryFocus?.unfocus();
@@ -58,7 +63,7 @@ class TextFieldCommon extends StatelessWidget {
       keyboardType: keyboardType,
       controller: controller,
       enabled: enabled,
-      textAlign: textAlign,
+      textAlign: textAlign??TextAlign.start,
       decoration: InputDecoration(
         prefix: prefix,
         filled: filled,
@@ -67,11 +72,13 @@ class TextFieldCommon extends StatelessWidget {
         border: border,
         disabledBorder: border,
         enabledBorder: border,
-        focusedBorder: border,
+        focusedBorder: focusedBorder?? border,
         suffixIcon: suffixIcon,
         hintText: hintText,
         labelStyle: labelStyle,
-        hintStyle: hintStyle,
+        hintStyle: hintStyle?? const TextStyle(
+          fontSize: 16, fontWeight: FontWeight.normal,color: ksmallDarkGrey,
+        ),
       ),
     );
   }
