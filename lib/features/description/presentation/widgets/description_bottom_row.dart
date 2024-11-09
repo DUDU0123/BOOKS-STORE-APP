@@ -2,12 +2,14 @@ import 'package:books_app/core/components/text_widget_common.dart';
 import 'package:books_app/core/constants/colors.dart';
 import 'package:books_app/core/constants/height_width.dart';
 import 'package:books_app/features/description/presentation/utils/rating_bottom_sheet.dart';
+import 'package:books_app/features/home/domain/entity/book_entity.dart';
 import 'package:flutter/material.dart';
 
 class DescriptionBottomRow extends StatelessWidget {
   const DescriptionBottomRow({
-    super.key,
+    super.key, required this.book,
   });
+  final BookEntity? book;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +40,7 @@ class DescriptionBottomRow extends StatelessWidget {
               ),
             ),
             onPressed: () {
-              ratingBottomSheet(context: context);
+              ratingBottomSheet(context: context, book: book);
             },
             child: const TextWidgetCommon(
               text: "Add rating",

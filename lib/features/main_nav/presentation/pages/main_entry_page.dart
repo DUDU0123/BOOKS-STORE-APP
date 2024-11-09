@@ -1,4 +1,4 @@
-import 'package:books_app/features/authors/presentation/bloc/author/auhtor_bloc.dart';
+import 'package:books_app/features/authors/presentation/bloc/author/author_bloc.dart';
 import 'package:books_app/features/authors/presentation/pages/authors_page.dart';
 import 'package:books_app/features/home/presentation/bloc/bloc/book_bloc.dart';
 import 'package:books_app/features/home/presentation/pages/home_page.dart';
@@ -24,7 +24,7 @@ class _MainEntryPageState extends State<MainEntryPage> {
   @override
   void initState() {
     context.read<BookBloc>().add(GetAllBooksEvent());
-    context.read<AuhtorBloc>().add(GetAllAuthorsEvent());
+    context.read<AuthorBloc>().add(GetAllAuthorsEvent());
     super.initState();
   }
   @override

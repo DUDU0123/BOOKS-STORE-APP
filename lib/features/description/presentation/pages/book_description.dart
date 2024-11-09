@@ -65,7 +65,7 @@ class BookDescription extends StatelessWidget {
                         ),
                       ),
                       kWidth10,
-                      ratingShowWidget(rating: 4.0),
+                      ratingShowWidget(rating: bookDescModel?.book.bookStarCount?.toDouble()?? 4.0),
                     ],
                   ),
                   bookAuthor(
@@ -93,7 +93,7 @@ class BookDescription extends StatelessWidget {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: const DescriptionBottomRow(),
+      floatingActionButton:  DescriptionBottomRow(book: bookDescModel?.book,),
     );
   }
 }

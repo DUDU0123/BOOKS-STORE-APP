@@ -4,4 +4,8 @@ import 'package:fpdart/fpdart.dart';
 
 abstract interface class BookRepository{
   Future<Either<Failure, List<BookEntity>>> getAllBooks();
+  Future<Either<Failure, bool>> addBookRating({
+    required int starCount,
+    required String bookId,required String jwtToken,
+  });
 }

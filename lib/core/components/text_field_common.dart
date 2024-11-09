@@ -21,7 +21,7 @@ class TextFieldCommon extends StatelessWidget {
     this.labelText,
     this.hintStyle,
     this.filled,
-    this.labelStyle,this.focusedBorder,this.obscureText = false,
+    this.labelStyle,this.focusedBorder,this.obscureText = false,this.enabledBorder,
   });
   final InputBorder? border;
   final InputBorder? focusedBorder;
@@ -45,6 +45,7 @@ class TextFieldCommon extends StatelessWidget {
   final TextStyle? labelStyle;
   final TextStyle? hintStyle;
   final bool? filled;
+  final InputBorder? enabledBorder;
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +72,7 @@ class TextFieldCommon extends StatelessWidget {
         fillColor: fillColor ?? kTransparent,
         border: border,
         disabledBorder: border,
-        enabledBorder: border,
+        enabledBorder: enabledBorder?? border,
         focusedBorder: focusedBorder?? border,
         suffixIcon: suffixIcon,
         hintText: hintText,

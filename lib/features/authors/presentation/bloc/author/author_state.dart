@@ -1,16 +1,16 @@
-part of 'auhtor_bloc.dart';
+part of 'author_bloc.dart';
 
-sealed class AuhtorState extends Equatable {
-  const AuhtorState();
+sealed class AuthorState extends Equatable {
+  const AuthorState();
   
   @override
   List<Object> get props => [];
 }
 
-final class AuhtorInitial extends AuhtorState {}
+final class AuhtorInitial extends AuthorState {}
 
-class AuthorsLoadingState extends AuhtorState{}
-class AuthorsLoadedState extends AuhtorState {
+class AuthorsLoadingState extends AuthorState{}
+class AuthorsLoadedState extends AuthorState {
   final List<AuthorEntity> authorList;
   const AuthorsLoadedState({
     required this.authorList,
@@ -18,7 +18,7 @@ class AuthorsLoadedState extends AuhtorState {
   @override
   List<Object> get props => [authorList,];
 }
-class AuthorsErrorState extends AuhtorState {
+class AuthorsErrorState extends AuthorState {
   final String message;
   const AuthorsErrorState({
     required this.message,

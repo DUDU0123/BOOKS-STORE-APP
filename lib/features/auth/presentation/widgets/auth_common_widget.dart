@@ -2,6 +2,7 @@ import 'package:books_app/config/routes/app_routes_name.dart';
 import 'package:books_app/config/routes/router.dart';
 import 'package:books_app/core/components/app_logo.dart';
 import 'package:books_app/core/components/common_container_button.dart';
+import 'package:books_app/core/components/text_widget_common.dart';
 import 'package:books_app/core/constants/colors.dart';
 import 'package:books_app/core/constants/height_width.dart';
 import 'package:books_app/core/enums/enums.dart';
@@ -29,8 +30,7 @@ class AuthCommonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: screenWidth(context: context),
+    return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: BlocConsumer<AuthenticationBloc, AuthenticationState>(
@@ -49,63 +49,96 @@ class AuthCommonWidget extends StatelessWidget {
             }
           }
         }, builder: (context, state) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const Spacer(),
-              const AppLogo(),
-              const Spacer(),
-              CommonAuthTextField(
-                focusNode: FocusNode(),
-                controller: usernameController,
-                labelText: "Username",
-                hintText: "Enter your username",
-              ),
-              kHeight17,
-              CommonAuthTextField(
-                focusNode: FocusNode(),
-                isObscureAndIconNeed: true,
-                controller: passwordController,
-                labelText: "Password",
-                hintText: "Enter your password",
-              ),
-              if (pageType == PageType.register) ...[
-                kHeight17,
-                CommonAuthTextField(
-                  focusNode: FocusNode(),
-                  isObscureAndIconNeed: true,
-                  controller: confirmPasswordController,
-                  labelText: "Confirm Password",
-                  hintText: "Confirm your password",
-                ),
-              ],
-              kHeight20,
-              (state is AuthenticationLoadingState)
-                  ? const Center(
-                      child: CircularProgressIndicator(
-                        color: kDarkOrange,
-                      ),
-                    )
-                  : CommonContainerButton(
-                      buttonText:
-                          pageType == PageType.register ? "Register" : "Login",
-                      onTap: () async {
-                        String username = usernameController.text;
-                        String password = passwordController.text;
-                        String? confirmPassword =
-                            confirmPasswordController?.text;
-                        AuthMethods.loginOrRegisterUser(
-                          confirmPassword: confirmPassword,
-                          context: context,
-                          pageType: pageType,
-                          password: password,
-                          username: username,
-                        );
-                      },
+          return ConstrainedBox(
+            constraints: BoxConstraints(
+            minHeight: MediaQuery.of(context).size.height,
+          ),
+            child: IntrinsicHeight(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  // const Spacer(),
+                  kHeight40,
+                  const AppLogo(),
+                  // const Spacer(),
+                  kHeight40,
+                  CommonAuthTextField(
+                    focusNode: FocusNode(),
+                    controller: usernameController,
+                    labelText: "Username",
+                    hintText: "Enter your username",
+                  ),
+                  kHeight17,
+                  CommonAuthTextField(
+                    focusNode: FocusNode(),
+                    isObscureAndIconNeed: true,
+                    controller: passwordController,
+                    labelText: "Password",
+                    hintText: "Enter your password",
+                  ),
+                  if (pageType == PageType.register) ...[
+                    kHeight17,
+                    CommonAuthTextField(
+                      focusNode: FocusNode(),
+                      isObscureAndIconNeed: true,
+                      controller: confirmPasswordController,
+                      labelText: "Confirm Password",
+                      hintText: "Confirm your password",
                     ),
-              const Spacer(),
-              const Spacer(),
-            ],
+                  ],
+                  kHeight20,
+                  (state is AuthenticationLoadingState)
+                      ? const Center(
+                          child: CircularProgressIndicator(
+                            color: kDarkOrange,
+                          ),
+                        )
+                      : CommonContainerButton(
+                          buttonText:
+                              pageType == PageType.register ? "Register" : "Login",
+                          onTap: () async {
+                            String username = usernameController.text;
+                            String password = passwordController.text;
+                            String? confirmPassword =
+                                confirmPasswordController?.text;
+                            AuthMethods.loginOrRegisterUser(
+                              confirmPassword: confirmPassword,
+                              context: context,
+                              pageType: pageType,
+                              password: password,
+                              username: username,
+                            );
+                          },
+                        ),
+                  if (pageType == PageType.login) ...[
+                    kHeight15,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        TextWidgetCommon(
+                          text: "Don't have an account?",
+                          textColor: Theme.of(context).colorScheme.onPrimary,
+                        ),
+                        kWidth5,
+                        GestureDetector(
+                          onTap: () {
+                            context.push(AppRoutesName.register);
+                          },
+                          child: const TextWidgetCommon(
+                            text: "Register",
+                            fontWeight: FontWeight.bold,
+                            textColor: kDarkOrange,
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                  // const Spacer(),
+                  // const Spacer(),
+                ],
+              ),
+            ),
           );
         }),
       ),

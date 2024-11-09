@@ -1,15 +1,12 @@
-import 'package:books_app/config/routes/app_routes_name.dart';
-import 'package:books_app/config/routes/router.dart';
 import 'package:books_app/config/theme/theme_manager/theme_manager_cubit.dart';
 import 'package:books_app/core/components/text_field_common.dart';
 import 'package:books_app/core/components/text_widget_common.dart';
 import 'package:books_app/core/constants/colors.dart';
 import 'package:books_app/core/constants/height_width.dart';
 import 'package:books_app/features/auth/presentation/bloc/authentication/authentication_bloc.dart';
+import 'package:books_app/features/home/presentation/bloc/bloc/book_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
-
 class MainAppBar extends StatelessWidget {
   const MainAppBar({
     super.key,
@@ -62,18 +59,21 @@ class MainAppBar extends StatelessWidget {
                   color: kGrey.withOpacity(0.3),
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: const Row(
+                child:  Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     kWidth10,
-                    Icon(
+                  const  Icon(
                       Icons.search,
                       color: kGrey,
                     ),
                     kWidth5,
                     Expanded(
                       child: TextFieldCommon(
+                        onChanged: (value) {
+                          context.read<BookBloc>().add(SearchBookEvent(query: value));
+                        },
                         cursorColor: kGrey,
                         hintText: "Search...",
                         border: InputBorder.none,

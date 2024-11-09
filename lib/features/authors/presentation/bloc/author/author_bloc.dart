@@ -4,12 +4,12 @@ import 'package:books_app/features/authors/domain/usecase/get_all_authors_usecas
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-part 'auhtor_event.dart';
-part 'auhtor_state.dart';
+part 'author_event.dart';
+part 'author_state.dart';
 
-class AuhtorBloc extends Bloc<AuhtorEvent, AuhtorState> {
+class AuthorBloc extends Bloc<AuthorEvent, AuthorState> {
   final GetAllAuthorsUsecase _getAllAuthorsUsecase;
-  AuhtorBloc({
+  AuthorBloc({
     required GetAllAuthorsUsecase getAllAuthorsUsecase,
   })  : _getAllAuthorsUsecase = getAllAuthorsUsecase,
         super(AuhtorInitial()) {
@@ -17,7 +17,7 @@ class AuhtorBloc extends Bloc<AuhtorEvent, AuhtorState> {
   }
 
   FutureOr<void> getAllAuthorsEvent(
-      GetAllAuthorsEvent event, Emitter<AuhtorState> emit) async {
+      GetAllAuthorsEvent event, Emitter<AuthorState> emit) async {
     try {
       final res = await _getAllAuthorsUsecase(params: null);
       res.fold(

@@ -78,6 +78,7 @@ class CommonAuthTextField extends StatelessWidget {
                   width: 2,
                 ),
               ),
+              
             );
           },
         ),

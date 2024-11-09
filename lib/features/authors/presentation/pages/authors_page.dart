@@ -1,7 +1,7 @@
 import 'package:books_app/core/components/common_message_widget.dart';
 import 'package:books_app/core/constants/height_width.dart';
 import 'package:books_app/core/utils/message_show_helper.dart';
-import 'package:books_app/features/authors/presentation/bloc/author/auhtor_bloc.dart';
+import 'package:books_app/features/authors/presentation/bloc/author/author_bloc.dart';
 import 'package:books_app/features/authors/presentation/widgets/author_container_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,7 +12,7 @@ class AuthorsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocConsumer<AuhtorBloc, AuhtorState>(
+      body: BlocConsumer<AuthorBloc, AuthorState>(
         listener: (context, state) {
           if (state is AuthorsErrorState) {
             MessageShowhelper.showSnackbar(snackBarContent: state.message, context: context);
@@ -24,6 +24,7 @@ class AuthorsPage extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
             itemBuilder: (context, index) {
               return authorContainerTile(
+                author: state.authorList[index],
                   avatarColor: Colors.accents[index], context: context);
             },
             separatorBuilder: (context, index) => kHeight10,

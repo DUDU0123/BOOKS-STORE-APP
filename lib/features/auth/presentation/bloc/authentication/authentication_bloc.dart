@@ -97,7 +97,7 @@ class AuthenticationBloc
           emit(AuthenticationErrorState(message: failure.message));
         },
         (isLoggedOut) {
-          event.context.goNamed(AppRoutesName.register);
+          event.context.goNamed(AppRoutesName.login);
           add(CheckUserLoggedInEvent());
         },
       );
