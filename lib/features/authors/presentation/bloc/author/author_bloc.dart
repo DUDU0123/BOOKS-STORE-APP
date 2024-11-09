@@ -58,7 +58,7 @@ class AuthorBloc extends Bloc<AuthorEvent, AuthorState> {
         final updatedAuthorMap = Map<String, AuthorEntity>.from(currentMap)
           ..[event.bookId] = author;
 
-        emit(AuthorsLoadedState(authorList: [], authorMap: updatedAuthorMap));
+        emit(AuthorsLoadedState(authorList: _authors, authorMap: updatedAuthorMap));
       },
     );
   } catch (e) {
