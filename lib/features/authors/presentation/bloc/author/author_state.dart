@@ -12,11 +12,12 @@ final class AuhtorInitial extends AuthorState {}
 class AuthorsLoadingState extends AuthorState{}
 class AuthorsLoadedState extends AuthorState {
   final List<AuthorEntity> authorList;
+  final Map<String, AuthorEntity>? authorMap;
   const AuthorsLoadedState({
-    required this.authorList,
+    required this.authorList, this.authorMap,
   });
   @override
-  List<Object> get props => [authorList,];
+  List<Object> get props => [authorList,authorMap??const {},];
 }
 class AuthorsErrorState extends AuthorState {
   final String message;

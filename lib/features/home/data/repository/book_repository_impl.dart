@@ -27,13 +27,11 @@ class BookRepositoryImpl implements BookRepository {
   Future<Either<Failure, bool>> addBookRating({
     required int starCount,
     required String bookId,
-    required String jwtToken,
   }) async {
     try {
       final isRatingAdded = await bookData.addBookRating(
         starCount: starCount,
         bookId: bookId,
-        jwtToken: jwtToken,
       );
       return right(isRatingAdded);
     } on ServerException catch (e) {

@@ -13,8 +13,20 @@ class AuthorRepoImpl implements AuthorRepository {
   @override
   Future<Either<Failure, List<AuthorEntity>>> getAllAuthors() async {
     try {
-      final authoList = await authorData.getAllAuthors();
-      return right(authoList);
+      final authorList = await authorData.getAllAuthors();
+      return right(authorList);
+    } on ServerException catch (e) {
+      return left(Failure(message: e.message));
+    } catch (e) {
+      return left(Failure(message: e.toString()));
+    }
+  }
+  
+  @override
+  Future<Either<Failure, AuthorEntity>> getOneAuthor({required String authorId}) async{
+     try {
+      final author = await authorData.getOneAuthor(authorId: authorId);
+      return right(author);
     } on ServerException catch (e) {
       return left(Failure(message: e.message));
     } catch (e) {

@@ -10,6 +10,7 @@ import 'package:books_app/features/authors/data/model/author_model.dart';
 abstract interface class AuthorData {
   /// Fetches all authors from the API and returns a list of AuthorModel.
   Future<List<AuthorModel>> getAllAuthors();
+  Future<AuthorModel> getOneAuthor({required String authorId});
 }
 
 /// A concrete implementation of the AuthorData interface that handles API calls.
@@ -44,6 +45,31 @@ class AuthorDataImpl implements AuthorData {
             .toList(); // Convert the iterable into a List<AuthorModel>.
 
         return authorList; // Return the list of AuthorModel objects.
+      } else {
+        // If the API response status code is not 200, throw a custom ServerException.
+        throw ServerException(message: "No author found");
+      }
+    } catch (e) {
+      // In case of any exception (e.g., network issue), throw a custom ServerException with the error message.
+      throw ServerException(message: e.toString());
+    }
+  }
+  
+  @override
+  Future<AuthorModel> getOneAuthor({required String authorId}) async {
+    try {
+      // Make a GET request to fetch authors data from the API.
+      final response = await client.get(Uri.parse(ApiConstants.oneAuthor(authorId: authorId)));
+
+      // Check if the response status is 200 (OK).
+      if (response.statusCode == 200) {
+        // Decode the response body into a map and extract the 'result' field, which contains the list of authors.
+        final decodedData = jsonDecode(response.body)['result'] as Map<String, dynamic>;
+
+        // Map the list of authors into a List<AuthorModel> using the AuthorModel.fromJson method.
+       AuthorModel author = AuthorModel.fromJson(json: decodedData); // Convert the iterable into a List<AuthorModel>.
+
+        return author; // Return the list of AuthorModel objects.
       } else {
         // If the API response status code is not 200, throw a custom ServerException.
         throw ServerException(message: "No author found");

@@ -9,7 +9,7 @@ Widget commonMessageWidget() {
           children: [
             TextWidgetCommon(
               textAlign: TextAlign.center,
-              text: "Something went wrong\nCheck back later",fontWeight: FontWeight.bold,
+              text: "Data Loading...\nPlease Wait...",fontWeight: FontWeight.bold,
               textColor: kGrey.withOpacity(0.8),
             ),
           ],

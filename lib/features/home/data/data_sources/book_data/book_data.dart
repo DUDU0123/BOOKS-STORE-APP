@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:books_app/core/constants/api_constants.dart';
 import 'package:books_app/core/exceptions/exceptions.dart';
+import 'package:books_app/core/services/token_storage.dart';
 import 'package:books_app/features/home/data/models/book_model.dart';
 import 'package:http/http.dart' as http;
 
@@ -14,7 +15,6 @@ abstract interface class BookData {
   Future<bool> addBookRating({
     required int starCount, // The rating value (e.g., number of stars)
     required String bookId, // ID of the book to rate
-    required String jwtToken, // JWT token for authorization
   });
 }
 
@@ -41,6 +41,7 @@ class BookDataImpl implements BookData {
         final List<BookModel> books = decodedData
             .map((bookJson) => BookModel.fromJson(json: bookJson)) // Convert JSON to BookModel objects
             .toList();
+            print("It is books $books");
         return books; // Return the list of books
       } else {
         throw ServerException(message: "No books found"); // Throw exception if no books found
@@ -55,26 +56,31 @@ class BookDataImpl implements BookData {
   Future<bool> addBookRating({
     required int starCount, // The rating value to be added
     required String bookId, // ID of the book to which the rating is added
-    required String jwtToken, // JWT token for authorization
   }) async {
     try {
+      final userToken = await TokenStorage.readToken();
+      if(userToken==null){
+        throw ServerException(message: "Can't rate, you are not authenticated");
+      }
       // API call to add a rating to the specified book
       final response = await client.post(
         Uri.parse(ApiConstants.addRating(id: bookId)),
         headers: {
-          'Authorization': 'Bearer $jwtToken', // Include the JWT token in the request headers
+          'Authorization': 'Bearer $userToken', // Include the JWT token in the request headers
         },
         body: jsonEncode({
-          "rating": starCount.toString(), // Encode the star count as a string in the request body
+          "rating": starCount, // Encode the star count in the request body
         }),
       );
+
+      log("From Book Data: ${response.statusCode} and ${response.body}");
 
       // Check if the response indicates success
       if (response.statusCode == 200) {
         log(response.body); // Log the response body for debugging
         return true; // Return true if the rating was successfully added
       } else {
-        log("${response.body}"); // Log the response body for debugging if not successful
+        log(response.body); // Log the response body for debugging if not successful
         throw ServerException(message: "Cannot add rating"); // Throw exception if the rating couldn't be added
       }
     } catch (e) {

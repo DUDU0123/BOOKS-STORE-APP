@@ -6,6 +6,6 @@ abstract interface class BookRepository{
   Future<Either<Failure, List<BookEntity>>> getAllBooks({required int page});
   Future<Either<Failure, bool>> addBookRating({
     required int starCount,
-    required String bookId,required String jwtToken,
+    required String bookId,
   });
 }

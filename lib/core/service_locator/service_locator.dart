@@ -11,6 +11,7 @@ import 'package:books_app/features/authors/data/data_source/author_data/author_d
 import 'package:books_app/features/authors/data/repository/author_repo/author_repo_impl.dart';
 import 'package:books_app/features/authors/domain/repository/author_repo/author_repository.dart';
 import 'package:books_app/features/authors/domain/usecase/get_all_authors_usecase.dart';
+import 'package:books_app/features/authors/domain/usecase/get_one_author_usecase.dart';
 import 'package:books_app/features/authors/presentation/bloc/author/author_bloc.dart';
 import 'package:books_app/features/description/presentation/bloc/cubit/description_cubit.dart';
 import 'package:books_app/features/home/data/data_sources/book_data/book_data.dart';
@@ -131,9 +132,15 @@ initAuthorDependencies() {
         authorRepository: serviceLocator<AuthorRepository>(),
       ),
     )
+    ..registerFactory<GetOneAuthorUsecase>(
+      () => GetOneAuthorUsecase(
+        authorRepository: serviceLocator<AuthorRepository>(),
+      ),
+    )
     ..registerLazySingleton<AuthorBloc>(
       () => AuthorBloc(
         getAllAuthorsUsecase: serviceLocator<GetAllAuthorsUsecase>(),
+        getOneAuthorUsecase: serviceLocator<GetOneAuthorUsecase>(),
       ),
     );
 }

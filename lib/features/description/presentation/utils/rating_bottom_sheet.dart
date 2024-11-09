@@ -1,10 +1,7 @@
-import 'dart:developer';
-
 import 'package:books_app/core/components/common_container_button.dart';
 import 'package:books_app/core/components/text_widget_common.dart';
 import 'package:books_app/core/constants/colors.dart';
 import 'package:books_app/core/constants/height_width.dart';
-import 'package:books_app/core/services/token_storage.dart';
 import 'package:books_app/features/description/presentation/bloc/cubit/description_cubit.dart';
 import 'package:books_app/features/home/domain/entity/book_entity.dart';
 import 'package:books_app/features/home/presentation/bloc/bloc/book_bloc.dart';
@@ -100,16 +97,13 @@ Future<dynamic> ratingBottomSheet({
                   return CommonContainerButton(
                     buttonText: "Submit",
                     onTap: () async {
-                      final userToken = await TokenStorage.readToken();
-                      log("User Token on star: $userToken");
                       if (book != null &&
                           book.bookId != null &&
-                          userToken != null && state.starCount>0) {
+                          state.starCount > 0) {
                         context.read<BookBloc>().add(
                               AddBookRatingEvent(
                                 startCount: state.starCount,
                                 bookId: book.bookId!,
-                                userToken: userToken,
                               ),
                             );
                       }

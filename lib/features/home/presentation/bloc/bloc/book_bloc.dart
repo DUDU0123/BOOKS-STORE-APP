@@ -72,7 +72,6 @@ class BookBloc extends Bloc<BookEvent, BookState> {
           params: RatingModel(
         starCount: event.startCount,
         bookId: event.bookId,
-        userToken: event.userToken,
       ));
       res.fold((failure) {
          emit(BooksErrorState(message: failure.message));

@@ -30,16 +30,13 @@ class SearchBookEvent extends BookEvent {
 class AddBookRatingEvent extends BookEvent {
   final int startCount;
   final String bookId;
-  final String userToken;
   const AddBookRatingEvent({
     required this.startCount,
     required this.bookId,
-    required this.userToken,
   });
   @override
   List<Object> get props => [
         startCount,
         bookId,
-        userToken,
       ];
 }
