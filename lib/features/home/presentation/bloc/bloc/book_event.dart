@@ -7,7 +7,14 @@ sealed class BookEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class GetAllBooksEvent extends BookEvent {}
+class GetAllBooksEvent extends BookEvent {
+  final int page;
+  const GetAllBooksEvent({
+    required this.page,
+  });
+  @override
+  List<Object> get props => [page,];
+}
 
 class SearchBookEvent extends BookEvent {
   final String query;

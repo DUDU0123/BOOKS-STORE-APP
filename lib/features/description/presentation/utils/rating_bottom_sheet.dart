@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:books_app/core/components/common_container_button.dart';
 import 'package:books_app/core/components/text_widget_common.dart';
 import 'package:books_app/core/constants/colors.dart';
@@ -99,12 +101,13 @@ Future<dynamic> ratingBottomSheet({
                     buttonText: "Submit",
                     onTap: () async {
                       final userToken = await TokenStorage.readToken();
+                      log("User Token on star: $userToken");
                       if (book != null &&
                           book.bookId != null &&
-                          userToken != null) {
+                          userToken != null && state.starCount>0) {
                         context.read<BookBloc>().add(
                               AddBookRatingEvent(
-                                startCount: 3,
+                                startCount: state.starCount,
                                 bookId: book.bookId!,
                                 userToken: userToken,
                               ),

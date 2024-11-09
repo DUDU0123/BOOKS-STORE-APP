@@ -27,7 +27,7 @@ class BookBloc extends Bloc<BookEvent, BookState> {
       GetAllBooksEvent event, Emitter<BookState> emit) async {
     emit(BooksLoadingState());
     try {
-      final res = await _getAllBooksUsecase(params: null);
+      final res = await _getAllBooksUsecase(params: event.page);
       res.fold(
         (failure) {
           emit(BooksErrorState(message: failure.message));

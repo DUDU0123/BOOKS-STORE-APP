@@ -3,10 +3,12 @@ import 'package:books_app/core/components/text_field_common.dart';
 import 'package:books_app/core/components/text_widget_common.dart';
 import 'package:books_app/core/constants/colors.dart';
 import 'package:books_app/core/constants/height_width.dart';
+import 'package:books_app/core/utils/message_show_helper.dart';
 import 'package:books_app/features/auth/presentation/bloc/authentication/authentication_bloc.dart';
 import 'package:books_app/features/home/presentation/bloc/bloc/book_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 class MainAppBar extends StatelessWidget {
   const MainAppBar({
     super.key,
@@ -18,6 +20,7 @@ class MainAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
+      pinned: true,
       title: TextWidgetCommon(
         text: currentIndex == 0 ? "BooksBox" : "Authors",
         fontWeight: FontWeight.w500,
@@ -26,11 +29,21 @@ class MainAppBar extends StatelessWidget {
       actions: [
         IconButton(
           onPressed: () {
-            context.read<AuthenticationBloc>().add(LogOutUserEvent(context: context));
+            MessageShowhelper.showDialogBox(
+              context: context,
+              dialogTitle: "Logout",
+              dialogContent: "Are you sure about logout?",
+              actionButtonName: "Logout",
+              buttonActionMethod: () {
+                context
+                    .read<AuthenticationBloc>()
+                    .add(LogOutUserEvent(context: context));
+              },
+            );
           },
-          icon: const Icon(
+          icon: Icon(
             Icons.power_settings_new_outlined,
-            color: kBlack,
+            color: Theme.of(context).colorScheme.onPrimary,
           ),
         ),
         IconButton(
@@ -59,12 +72,12 @@ class MainAppBar extends StatelessWidget {
                   color: kGrey.withOpacity(0.3),
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child:  Row(
+                child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     kWidth10,
-                  const  Icon(
+                    const Icon(
                       Icons.search,
                       color: kGrey,
                     ),
@@ -72,7 +85,9 @@ class MainAppBar extends StatelessWidget {
                     Expanded(
                       child: TextFieldCommon(
                         onChanged: (value) {
-                          context.read<BookBloc>().add(SearchBookEvent(query: value));
+                          context
+                              .read<BookBloc>()
+                              .add(SearchBookEvent(query: value));
                         },
                         cursorColor: kGrey,
                         hintText: "Search...",

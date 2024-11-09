@@ -26,6 +26,12 @@ samples, guidance on mobile development, and a full API reference.
 7. User can change the theme of the app.
 8. Logout feature.
 
+## Techologies Used
+
+1. Architecture - Clean
+2. State Management - Bloc
+3. Backend - Rest Api
+
 ## Set up the project in your local machine and run
 
 For setting up the project in your local machine and to run the app follow the below steps:

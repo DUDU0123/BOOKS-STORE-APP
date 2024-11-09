@@ -4,6 +4,7 @@ import 'package:books_app/features/home/presentation/bloc/bloc/book_bloc.dart';
 import 'package:books_app/features/home/presentation/widgets/common_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -12,13 +13,26 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final ScrollController _scrollController = ScrollController();
+  int _currentPage = 1;
 
   @override
   void initState() {
-    context.read<BookBloc>().add(GetAllBooksEvent());
     super.initState();
+    context.read<BookBloc>().add(GetAllBooksEvent(page: _currentPage));
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels >=
+          _scrollController.position.maxScrollExtent) {
+        _loadNextPage();
+      }
+    });
   }
-  
+
+  void _loadNextPage() {
+    // Increase the page count and trigger the event
+    _currentPage++;
+    context.read<BookBloc>().add(GetAllBooksEvent(page: _currentPage));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +53,7 @@ class _HomePageState extends State<HomePage> {
         }
         if (state is BooksLoadedState) {
           return CommonGridView(
+            controller: _scrollController,
             bookList: state.bookList,
             isShimmer: false,
           );
@@ -47,10 +62,4 @@ class _HomePageState extends State<HomePage> {
       },
     ));
   }
-
-  
 }
-
-
-
-

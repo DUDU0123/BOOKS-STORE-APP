@@ -1,17 +1,18 @@
 import 'package:books_app/core/components/text_widget_common.dart';
-import 'package:books_app/core/constants/app_keys.dart';
 import 'package:books_app/core/constants/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class MessageShowhelper {
   static void showDialogBox({
     required String dialogTitle,
     required String dialogContent,
     required String actionButtonName,
-    required void Function()? buttonActionMethod,
+    required void Function()? buttonActionMethod,required BuildContext context,
   }) {
     showDialog(
-      context: navigatorKey.currentContext!,
+      barrierDismissible: false,
+      context: context,
       builder: (context) => AlertDialog(
         title: TextWidgetCommon(
           text: dialogTitle,
@@ -24,7 +25,7 @@ class MessageShowhelper {
         actions: [
           commonTextButton(
             buttonActionMethod: () {
-              navigatorKey.currentState?.pop();
+              context.pop();
             },
             buttonText: 'Cancel',
           ),

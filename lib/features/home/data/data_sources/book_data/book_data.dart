@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 // Abstract interface class defining the contract for book data operations
 abstract interface class BookData {
   // Abstract method to get all books
-  Future<List<BookModel>> getAllBooks();
+  Future<List<BookModel>> getAllBooks({required int page});
 
   // Abstract method to add a rating for a book
   Future<bool> addBookRating({
@@ -29,7 +29,7 @@ class BookDataImpl implements BookData {
 
   // Implementation of the method to get all books
   @override
-  Future<List<BookModel>> getAllBooks() async {
+  Future<List<BookModel>> getAllBooks({required int page}) async {
     try {
       int limit = 10; // Limit for the number of books fetched
       final response = await client

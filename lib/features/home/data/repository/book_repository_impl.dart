@@ -12,9 +12,9 @@ class BookRepositoryImpl implements BookRepository {
   });
 
   @override
-  Future<Either<Failure, List<BookEntity>>> getAllBooks() async {
+  Future<Either<Failure, List<BookEntity>>> getAllBooks({required int page}) async {
     try {
-      final bookList = await bookData.getAllBooks();
+      final bookList = await bookData.getAllBooks(page: page);
       return right(bookList);
     } on ServerException catch (e) {
       return left(Failure(message: e.message));

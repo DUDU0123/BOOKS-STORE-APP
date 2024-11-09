@@ -23,7 +23,6 @@ class MainEntryPage extends StatefulWidget {
 class _MainEntryPageState extends State<MainEntryPage> {
   @override
   void initState() {
-    context.read<BookBloc>().add(GetAllBooksEvent());
     context.read<AuthorBloc>().add(GetAllAuthorsEvent());
     super.initState();
   }

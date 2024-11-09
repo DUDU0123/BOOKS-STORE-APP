@@ -7,14 +7,16 @@ class CommonGridView extends StatelessWidget {
   const CommonGridView({
     super.key,
     this.bookList = const [],
-    required this.isShimmer,
+    required this.isShimmer,this.controller,
   });
   final List<BookEntity> bookList;
   final bool isShimmer;
+  final ScrollController? controller;
 
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
+      controller: controller,
       padding: EdgeInsets.symmetric(
           horizontal: isShimmer ? 10 : 0, vertical: isShimmer ? 20 : 10),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

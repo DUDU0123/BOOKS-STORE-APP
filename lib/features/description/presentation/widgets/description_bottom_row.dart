@@ -27,8 +27,8 @@ class DescriptionBottomRow extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const TextWidgetCommon(
-            text: "\u20B9200.00",
+           TextWidgetCommon(
+            text: "\u20B9${book?.bookPrice?.toDouble()??0.0}",
             fontWeight: FontWeight.bold,
             fontSize: 22,
           ),
