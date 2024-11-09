@@ -26,7 +26,11 @@ class AuthMethods {
                     userEntity: user,
                   ),
                 );
+          }else{
+            MessageShowhelper.showSnackbar(snackBarContent: 'Password not matching', context: context);
           }
+        }else{
+          MessageShowhelper.showSnackbar(snackBarContent: 'Password not matching', context: context);
         }
       }else{
         MessageShowhelper.showSnackbar(snackBarContent: 'Enter valid credentials', context: context);
