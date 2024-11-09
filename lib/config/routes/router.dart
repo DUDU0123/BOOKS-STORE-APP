@@ -3,14 +3,15 @@ import 'package:books_app/features/auth/presentation/pages/login/login_page.dart
 import 'package:books_app/features/auth/presentation/pages/register/register_page.dart';
 import 'package:books_app/features/authors/presentation/pages/authors_page.dart';
 import 'package:books_app/features/description/presentation/pages/book_description.dart';
+import 'package:books_app/features/description/presentation/utils/book_desc_model.dart';
 import 'package:books_app/features/home/presentation/pages/home_page.dart';
 import 'package:books_app/features/main_nav/presentation/pages/main_entry_page.dart';
 import 'package:books_app/features/splash/presentation/pages/books_splash_screen.dart';
-import 'package:flutter/material.dart';
+import 'package:books_app/features/splash/presentation/pages/wrapper_page.dart';
 import 'package:go_router/go_router.dart';
 
 final GoRouter router = GoRouter(
-  initialLocation: AppRoutesName.splashIntro,
+  initialLocation: AppRoutesName.wrapperPage,
   routes: <RouteBase>[
     GoRoute(
       path: AppRoutesName.register,
@@ -31,6 +32,13 @@ final GoRouter router = GoRouter(
       name: AppRoutesName.splashIntro,
       builder: (context, state) {
         return const BooksSplashScreen();
+      },
+    ),
+    GoRoute(
+      path: AppRoutesName.wrapperPage,
+      name: AppRoutesName.wrapperPage,
+      builder: (context, state) {
+        return const WrapperPage();
       },
     ),
     GoRoute(
@@ -58,8 +66,10 @@ final GoRouter router = GoRouter(
       path: AppRoutesName.descriptionPage,
       name: AppRoutesName.descriptionPage,
       builder: (context, state) {
-        Color color = state.extra as Color;
-        return BookDescription(color: color,);
+        BookDescModel? bookNeededData = state.extra as BookDescModel?;
+        return BookDescription(
+          bookDescModel: bookNeededData,
+        );
       },
     ),
   ],

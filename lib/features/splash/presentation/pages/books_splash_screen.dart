@@ -1,27 +1,9 @@
-import 'package:books_app/config/routes/app_routes_name.dart';
 import 'package:books_app/core/components/app_logo.dart';
 import 'package:books_app/core/constants/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
-class BooksSplashScreen extends StatefulWidget {
+class BooksSplashScreen extends StatelessWidget {
   const BooksSplashScreen({super.key});
-
-  @override
-  State<BooksSplashScreen> createState() => _BooksSplashScreenState();
-}
-
-class _BooksSplashScreenState extends State<BooksSplashScreen> {
-  @override
-  void initState() {
-    Future.delayed(
-      const Duration(seconds: 3),
-      () {
-        mounted ? context.goNamed(AppRoutesName.mainEntry) : null;
-      },
-    );
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {

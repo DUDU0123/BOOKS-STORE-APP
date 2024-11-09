@@ -16,3 +16,28 @@ class FieldFocusChangeEvent extends AuthenticationEvent {
   @override
   List<Object?> get props => [isFieldFocused,controller,];
 }
+class RegisterUserEvent extends AuthenticationEvent {
+  final UserEntity userEntity;
+  RegisterUserEvent({
+    required this.userEntity,
+  });
+  @override
+  List<Object?> get props => [userEntity,];
+}
+class LoginUserEvent extends AuthenticationEvent {
+  final UserEntity userEntity;
+  LoginUserEvent({
+    required this.userEntity,
+  });
+  @override
+  List<Object?> get props => [userEntity,];
+}
+class LogOutUserEvent extends AuthenticationEvent {
+  final BuildContext context;
+  LogOutUserEvent({
+    required this.context,
+  });
+  @override
+  List<Object?> get props => [context];
+}
+class CheckUserLoggedInEvent extends AuthenticationEvent{}

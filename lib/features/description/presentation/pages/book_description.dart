@@ -1,7 +1,7 @@
 import 'package:books_app/core/components/text_widget_common.dart';
-import 'package:books_app/core/constants/app_keys.dart';
 import 'package:books_app/core/constants/colors.dart';
 import 'package:books_app/core/constants/height_width.dart';
+import 'package:books_app/features/description/presentation/utils/book_desc_model.dart';
 import 'package:books_app/features/description/presentation/widgets/description_bottom_row.dart';
 import 'package:books_app/features/description/presentation/widgets/rating_show_widget.dart';
 import 'package:books_app/features/home/presentation/widgets/book_detail_small_container_widgets.dart';
@@ -15,8 +15,8 @@ The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for t
 ''';
 
 class BookDescription extends StatelessWidget {
-  const BookDescription({super.key, this.color});
-  final Color? color;
+  const BookDescription({super.key, required this.bookDescModel});
+  final BookDescModel? bookDescModel;
 
   @override
   Widget build(BuildContext context) {
@@ -38,17 +38,18 @@ class BookDescription extends StatelessWidget {
             Container(
               padding: const EdgeInsets.symmetric(vertical: 20),
               decoration: BoxDecoration(
-                color: color?.withOpacity(0.5),
-              ),
+                  color: bookDescModel?.color.withOpacity(0.5),
+                  ),
               height: screenHeight(context: context) / 2.8,
               width: screenWidth(context: context),
               child: Image.network(
-                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQ6EO4caRrtQkHq2YBXezwxuOiYNP4rD1evg&s',
+                bookDescModel?.book.bookCoverPictureURL ??
+                    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQ6EO4caRrtQkHq2YBXezwxuOiYNP4rD1evg&s',
               ),
             ),
             Padding(
               padding: const EdgeInsets.only(
-                  left: 20, right: 20, bottom: 60, top: 5),
+                  left: 20, right: 20, bottom: 80, top: 5),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -57,15 +58,20 @@ class BookDescription extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      bookTitle(
-                        bookName: "Rich Dad Poor Dad",
+                      Expanded(
+                        child: bookTitle(
+                          isPreview: false,
+                          bookName: bookDescModel?.book.bookTitle ?? 'No Name',
+                        ),
                       ),
+                      kWidth10,
                       ratingShowWidget(rating: 4.0),
                     ],
                   ),
                   bookAuthor(
                     context: context,
-                    bookAuthorName: "by Robert t Kiyosaki",
+                    bookAuthorName:
+                        "by ${bookDescModel?.book.bookTitle ?? 'No Name'}",
                   ),
                   kHeight10,
                   TextWidgetCommon(
@@ -76,8 +82,8 @@ class BookDescription extends StatelessWidget {
                     fontWeight: FontWeight.normal,
                   ),
                   kHeight10,
-                  const TextWidgetCommon(
-                    text: data,
+                  TextWidgetCommon(
+                    text: bookDescModel?.book.bookDescription ?? "",
                     fontSize: 16,
                   ),
                 ],

@@ -3,6 +3,7 @@ import 'package:books_app/config/theme/theme_constants.dart';
 import 'package:books_app/config/theme/theme_manager/theme_manager_cubit.dart';
 import 'package:books_app/core/service_locator/service_locator.dart';
 import 'package:books_app/features/auth/presentation/bloc/authentication/authentication_bloc.dart';
+import 'package:books_app/features/home/presentation/bloc/bloc/book_bloc.dart';
 import 'package:books_app/features/main_nav/presentation/bloc/bottom_nav/bottom_navigation_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,6 +23,9 @@ class RootWidgetPage extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => serviceLocator<ThemeManagerCubit>(),
+        ),
+        BlocProvider(
+          create: (context) => serviceLocator<BookBloc>(),
         ),
       ],
       child: BlocBuilder<ThemeManagerCubit, ThemeManagerState>(

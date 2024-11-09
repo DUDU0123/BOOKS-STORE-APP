@@ -4,7 +4,7 @@ import 'package:books_app/core/constants/colors.dart';
 import 'package:flutter/material.dart';
 
 class MessageShowhelper {
- static void showDialogBox({
+  static void showDialogBox({
     required String dialogTitle,
     required String dialogContent,
     required String actionButtonName,
@@ -37,21 +37,27 @@ class MessageShowhelper {
     );
   }
 
- static void showSnackbar({
+  static void showSnackbar({
     required String snackBarContent,
+    required BuildContext context,
   }) {
-    ScaffoldMessenger.of(navigatorKey.currentContext!).showSnackBar(
+    ScaffoldMessenger.of(context)..hideCurrentSnackBar()..showSnackBar(
       SnackBar(
+        behavior: SnackBarBehavior.floating,
         content: TextWidgetCommon(
-          text: snackBarContent,textColor: kWhite,
+          text: snackBarContent,
+          textColor: kDarkOrange.withOpacity(0.8),
           fontSize: 18,
         ),
         backgroundColor: kBlack,
-        duration: const Duration(seconds: 2,),
+        duration: const Duration(
+          seconds: 1,
+        ),
       ),
     );
   }
 }
+
 Widget commonTextButton({
   required String buttonText,
   required void Function()? buttonActionMethod,

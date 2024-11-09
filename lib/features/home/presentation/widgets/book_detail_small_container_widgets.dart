@@ -1,5 +1,4 @@
 import 'package:books_app/core/components/text_widget_common.dart';
-import 'package:books_app/core/constants/colors.dart';
 import 'package:flutter/material.dart';
 
 Widget bookPrice({
@@ -45,12 +44,13 @@ Widget bookAuthor({
 }
 
 Widget bookTitle({
-  required String bookName,
+  required String bookName,required bool isPreview,
 }) {
   return TextWidgetCommon(
     text: bookName,
     overflow: TextOverflow.ellipsis,
     fontSize: 20,
+    maxLines: !isPreview? 2:1,
     fontWeight: FontWeight.w500,
   );
 }

@@ -16,12 +16,13 @@ class AppLogo extends StatelessWidget {
         borderRadius: BorderRadius.circular(15),
         color: kWhite,
       ),
-      child: const Center(
-        child: Icon(
-          Icons.book,
-          color: kOrange,
-          size: 38,
-        ),
+      child: Center(
+        child: Image.asset('assets/BookLogo.png'),
+        // Icon(
+        //   Icons.book,
+        //   color: kOrange,
+        //   size: 38,
+        // ),
       ),
     );
   }
