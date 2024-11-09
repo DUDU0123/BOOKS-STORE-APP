@@ -1,25 +1,27 @@
 import 'dart:convert';
 import 'dart:developer';
-
 import 'package:books_app/core/constants/api_constants.dart';
 import 'package:books_app/core/exceptions/exceptions.dart';
 import 'package:books_app/features/home/data/models/book_model.dart';
-import 'package:books_app/features/home/domain/entity/book_entity.dart';
 import 'package:http/http.dart' as http;
 
 abstract interface class BookData {
+  // abstract method for get all books
   Future<List<BookModel>> getAllBooks();
+  // abstract method for rating add
   Future<bool> addBookRating({
     required int starCount,
     required String bookId,required String jwtToken,
   });
 }
 
+// a class that implement all methods of book data abstract class
 class BookDataImpl implements BookData {
   final http.Client client;
   BookDataImpl({
     required this.client,
   });
+  // implementation for getall books method
   @override
   Future<List<BookModel>> getAllBooks() async {
     try {
@@ -39,7 +41,7 @@ class BookDataImpl implements BookData {
       throw ServerException(message: e.toString());
     }
   }
-
+  // implementation for add book rating method
   @override
   Future<bool> addBookRating({
     required int starCount,
@@ -67,6 +69,7 @@ class BookDataImpl implements BookData {
     }
   }
 
+  //get one book by id method
   Future<BookModel> getOneBook({required String bookId}) async {
     try {
       final response =
