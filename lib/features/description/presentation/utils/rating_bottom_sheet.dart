@@ -70,11 +70,13 @@ Future<dynamic> ratingBottomSheet({
                     (index) {
                       return IconButton(
                         onPressed: () async {
-                          context.read<DescriptionCubit>().setStarCount(count: index+1);
+                          context
+                              .read<DescriptionCubit>()
+                              .setStarCount(count: index + 1);
                         },
-                        icon:  Icon(
+                        icon: Icon(
                           Icons.star,
-                          color:  index < starCount ? kYellow : kGrey,
+                          color: index < starCount ? kYellow : kGrey,
                           size: 40,
                         ),
                       );
@@ -91,11 +93,12 @@ Future<dynamic> ratingBottomSheet({
             kHeight10,
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: CommonContainerButton(
+              child: BlocBuilder<DescriptionCubit, DescriptionState>(
+                builder: (context, state) {
+                  return CommonContainerButton(
                     buttonText: "Submit",
                     onTap: () async {
                       final userToken = await TokenStorage.readToken();
-
                       if (book != null &&
                           book.bookId != null &&
                           userToken != null) {
@@ -109,29 +112,9 @@ Future<dynamic> ratingBottomSheet({
                       }
                       context.pop();
                     },
-                  )
-              // BlocBuilder<DescriptionCubit, DescriptionState>(
-              //   builder: (context, state) {
-              //     return CommonContainerButton(
-              //       buttonText: "Submit",
-              //       onTap: () async {
-              //         final userToken = await TokenStorage.readToken();
-
-              //         if (book != null &&
-              //             book.bookId != null &&
-              //             userToken != null) {
-              //           context.read<BookBloc>().add(
-              //                 AddBookRatingEvent(
-              //                   startCount: 3,
-              //                   bookId: book.bookId!,
-              //                   userToken: userToken,
-              //                 ),
-              //               );
-              //         }
-              //       },
-              //     );
-              //   },
-              // ),
+                  );
+                },
+              ),
             )
           ],
         ),

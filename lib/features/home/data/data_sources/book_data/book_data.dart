@@ -51,14 +51,15 @@ class BookDataImpl implements BookData {
         headers: {
         'Authorization': 'Bearer $jwtToken', // Add the JWT token in the headers
       },
-        body: {
-          "rating": starCount,
-        },
+        body: jsonEncode({
+          "rating": starCount.toString(),
+        }),
       );
       if (response.statusCode == 200) {
         log(response.body);
         return true;
       } else {
+        log("${response.body}");
         throw ServerException(message: "Cannot add rating");
       }
     } catch (e) {
